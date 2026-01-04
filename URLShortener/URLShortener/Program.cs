@@ -53,7 +53,7 @@ public class Program
         {
             try 
             {
-                await DbSeeder.SeedAdminAsync(scope.ServiceProvider);
+                await DbSeeder.SeedDataAsync(scope.ServiceProvider);
             }
             catch (Exception ex)
             {

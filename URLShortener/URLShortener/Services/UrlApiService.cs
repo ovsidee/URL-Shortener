@@ -83,7 +83,7 @@ public class UrlApiService : IUrlApiService
         
         var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
         
-        // admin can delete all, users can only delete their own.
+        // admin can delete all, users can only delete their own
         if (!isAdmin && url.CreatedBy != user.UserName)
         {
             throw new UnauthorizedAccessException("You are not allowed to delete this URL.");
