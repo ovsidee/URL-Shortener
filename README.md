@@ -1,2 +1,2 @@
-# URL-Shortener
-URL Shortener ASP.NET MVC, ANGULAR, EF, C#, CodeFirst
+# FullStack URL-Shortener
+URL Shortener ASP.NET MVC, Angular, EF, C#, CodeFirst approach.
