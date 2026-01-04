@@ -39,9 +39,9 @@ Has a secure login system using Identity and a SQLite database.
 ### 1. Running the Database
 The project uses SQLite. You need to apply migrations to create the database file (app.db).
 1. Navigate to the backend folder:
-  ```bash
-  cd URLShortener
-  ```
+   ```bash
+   cd URLShortener
+   ```
 2. Restore dependencies:
   ```bash
   dotnet restore
@@ -54,12 +54,36 @@ The project uses SQLite. You need to apply migrations to create the database fil
  ```bash
  dotnet tool install --global dotnet-ef
  ```
-5. Run the Backend Server:
+4. Run the Backend Server:
  ```bash
  dotnet run
  ``` 
 The API will start at http://localhost:5152.
 *Note: On the first run, the app will automatically seed default users.*
 
+### 2. Frontend Setup (Angular)
+1. Open a new terminal and navigate to the frontend folder:
+ ```bash
+ cd ClientApp
+ ```
+2. Install dependencies:
+ ```bash
+ npm install
+ ```
+3.Run the Angular App:
+  ```bash
+  ng serve -o
+  ```
+The application will open automatically at http://localhost:4200.
 
+### 3. Running Tests 
+The solution includes Unit Tests for the Service Layer (Business Logic).
 
+1. Navigate to the test project directory:
+  ```bash
+  cd URLShortener.Tests
+  ```
+2. Run the tests:
+  ```bash
+  dotnet test
+  ```
