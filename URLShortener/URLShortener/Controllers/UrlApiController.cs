@@ -53,15 +53,15 @@ namespace URLShortener.Controllers
 
         [HttpPost("add")]
         [Authorize]
-        public async Task<IActionResult> AddUrl([FromBody] UrlDto urlDto, CancellationToken cancellationToken) 
+        public async Task<IActionResult> AddUrl([FromBody] UrlRequestDto urlRequestDto, CancellationToken cancellationToken) 
         {
-            if (urlDto == null || string.IsNullOrWhiteSpace(urlDto.Url))
+            if (urlRequestDto == null || string.IsNullOrWhiteSpace(urlRequestDto.Url))
                 return BadRequest("URL cannot be empty.");
             
             try
             {
                 var result = await _urlService
-                    .AddUrlAsync(urlDto.Url, User, cancellationToken);
+                    .AddUrlAsync(urlRequestDto.Url, User, cancellationToken);
                 return Ok(result);
             }
             catch (InvalidOperationException ex) // handles "URL already exists"
