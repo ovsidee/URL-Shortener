@@ -11,7 +11,7 @@ namespace URLShortener.Controllers
     public class UrlApiController : ControllerBase
     {
         private readonly IUrlApiService _urlService;
-        private readonly UserManager<IdentityUser> _userManager; // ADDED: Needed for Role checks
+        private readonly UserManager<IdentityUser> _userManager;
         
         public UrlApiController(IUrlApiService urlService, UserManager<IdentityUser> userManager)
         {
@@ -23,7 +23,8 @@ namespace URLShortener.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> GetUserInfo()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager
+                .GetUserAsync(User);
             
             // Anonymous (Not logged in)
             if (user == null) 
@@ -32,7 +33,8 @@ namespace URLShortener.Controllers
             }
 
             // Logged In
-            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
+            var isAdmin = await _userManager
+                .IsInRoleAsync(user, "Admin");
             
             return Ok(new { 
                 IsAuthenticated = true, 
@@ -44,7 +46,8 @@ namespace URLShortener.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUrls(CancellationToken cancellationToken)
         {
-            var urls = await _urlService.GetAllUrlsAsync(cancellationToken);
+            var urls = await _urlService
+                .GetAllUrlsAsync(cancellationToken);
             return Ok(urls);
         }
 
@@ -54,10 +57,11 @@ namespace URLShortener.Controllers
         {
             if (urlDto == null || string.IsNullOrWhiteSpace(urlDto.Url))
                 return BadRequest("URL cannot be empty.");
-
+            
             try
             {
-                var result = await _urlService.AddUrlAsync(urlDto.Url, User, cancellationToken);
+                var result = await _urlService
+                    .AddUrlAsync(urlDto.Url, User, cancellationToken);
                 return Ok(result);
             }
             catch (InvalidOperationException ex) // handles "URL already exists"
@@ -76,7 +80,9 @@ namespace URLShortener.Controllers
         {
             try
             {
-                var success = await _urlService.DeleteUrlAsync(id, User, cancellationToken);
+                var success = await _urlService
+                    .DeleteUrlAsync(id, User, cancellationToken);
+                
                 if (!success) return NotFound();
                 
                 return Ok();
@@ -85,6 +91,19 @@ namespace URLShortener.Controllers
             {
                 return Forbid();
             }
+        }
+        
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetUrlDetails(int id, CancellationToken cancellationToken)
+        {
+            var url = await _urlService
+                .GetByIdAsync(id, cancellationToken);
+    
+            if (url == null) 
+                return NotFound("URL not found.");
+    
+            return Ok(url);
         }
     }
 }

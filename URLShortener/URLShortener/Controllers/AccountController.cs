@@ -27,7 +27,6 @@ public class AccountController : Controller
             var success = await _accountService.LoginAsync(model, cancellationToken);
             if (success)
             {
-                // Redirect to the Table View (Home) after success
                 return RedirectToAction("Index", "Home");
             }
 

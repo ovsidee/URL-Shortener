@@ -40,7 +40,7 @@ public class UrlApiService : IUrlApiService
 
     public async Task<ShortUrl> AddUrlAsync(string originalUrl, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken)
     {
-        // Check if URL already exists [Source: 18]
+        // check if exists
         var existing = await _context.ShortUrls
             .FirstOrDefaultAsync(u => u.OriginalURL == originalUrl, cancellationToken);
 
@@ -82,7 +82,8 @@ public class UrlApiService : IUrlApiService
         }
         
         var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-        // Logic: Admin can delete all. Users can only delete their own.
+        
+        // admin can delete all, users can only delete their own.
         if (!isAdmin && url.CreatedBy != user.UserName)
         {
             throw new UnauthorizedAccessException("You are not allowed to delete this URL.");

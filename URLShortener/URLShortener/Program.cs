@@ -31,6 +31,7 @@ public class Program
         //----DI
         builder.Services.AddScoped<IUrlApiService, UrlApiService>();
         builder.Services.AddScoped<IAccountService, AccountService>();
+        builder.Services.AddScoped<IAboutService, AboutService>(); 
         
         // CORS Service
         builder.Services.AddCors(options =>
@@ -41,7 +42,7 @@ public class Program
                     policy.WithOrigins("http://localhost:4200") // Angular port
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials(); // Important for Auth Cookies
+                        .AllowCredentials(); // Auth Cookies
                 });
         });
         
