@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">URL Shortener</h1>
+    <p>Welcome to the .NET Test Task.</p>
+    
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <p><a href="/Account/Login">Login</a> to manage your URLs.</p>
+    }
+    else 
+    {
+        <p>Loading your URL Dashboard...</p>
+    }
+</div>
