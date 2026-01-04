@@ -1,6 +1,6 @@
-# FullStack URL-Shortener
+# URL-Shortener
 
-A full-stack URL Shortener application built with ASP.NET Core (Backend) and Angular (Frontend). 
+A Full-Stack URL Shortener application built with ASP.NET Core (Backend) and Angular (Frontend). 
 Application allows users to shorten long URLs, manage their links, and admin features (e.g. change the about section about the algorithm).
 Has a secure login system using Identity and a SQLite database.
 
@@ -47,17 +47,17 @@ The project uses SQLite. You need to apply migrations to create the database fil
   dotnet restore
   ```
 3. Update the database (Runs migrations & creates app.db):
-   ```bash
-   dotnet ef database update
-   ```
+ ```bash
+ dotnet ef database update
+ ```
    Note: If you don't have the EF tool installed, run: 
-   ```bash
-   dotnet tool install --global dotnet-ef
-   ```
-4. Run the Backend Server:
-   ```bash
-   dotnet run
-   ``` 
+ ```bash
+ dotnet tool install --global dotnet-ef
+ ```
+5. Run the Backend Server:
+ ```bash
+ dotnet run
+ ``` 
 The API will start at http://localhost:5152.
 *Note: On the first run, the app will automatically seed default users.*
 
