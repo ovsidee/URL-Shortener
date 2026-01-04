@@ -39,9 +39,9 @@ Has a secure login system using Identity and a SQLite database.
 ### 1. Running the Database
 The project uses SQLite. You need to apply migrations to create the database file (app.db).
 1. Navigate to the backend folder:
-   ```bash
-   cd URLShortener
-   ```
+  ```bash
+  cd URLShortener
+  ```
 2. Restore dependencies:
   ```bash
   dotnet restore
