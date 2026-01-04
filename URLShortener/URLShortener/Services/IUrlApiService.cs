@@ -1,13 +1,13 @@
 ﻿using System.Security.Claims;
-using URLShortener.Models;
+using URLShortener.Models.DTO.Response; 
 
 namespace URLShortener.Services;
 
 public interface IUrlApiService
 {
-    Task<IEnumerable<ShortUrl>> GetAllUrlsAsync(CancellationToken cancellationToken);
-    Task<ShortUrl?> GetByIdAsync(int id, CancellationToken cancellationToken);
-    Task<ShortUrl> AddUrlAsync(string originalUrl, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken);
-    Task<bool> DeleteUrlAsync(int id, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken);
-    Task<ShortUrl?> GetByPathAsync(string shortCode, CancellationToken cancellationToken);
+    Task<IEnumerable<UrlResponseDto>> GetAllUrlsAsync(CancellationToken token);
+    Task<UrlResponseDto?> GetByIdAsync(int id, CancellationToken token);
+    Task<UrlResponseDto> AddUrlAsync(string originalUrl, ClaimsPrincipal user, CancellationToken token);
+    Task<bool> DeleteUrlAsync(int id, ClaimsPrincipal user, CancellationToken token);
+    Task<UrlResponseDto?> GetByPathAsync(string shortCode, CancellationToken token);
 }

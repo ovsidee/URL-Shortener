@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using URLShortener.Data;
+using URLShortener.Extensions;
 using URLShortener.Models;
+using URLShortener.Models.DTO.Response;
 
 namespace URLShortener.Services;
 
@@ -17,44 +19,37 @@ public class UrlApiService : IUrlApiService
         _userManager = userManager;
     }
 
-    public async Task<IEnumerable<ShortUrl>> GetAllUrlsAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<UrlResponseDto>> GetAllUrlsAsync(CancellationToken cancellationToken)
     {
-        return await _context
-            .ShortUrls
-            .ToListAsync(cancellationToken);
+        var entities = await _context.ShortUrls.ToListAsync(cancellationToken);
+        return entities.Select(u => u.ToDto()); 
     }
 
-    public async Task<ShortUrl?> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<UrlResponseDto?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return await _context
-            .ShortUrls
-            .FindAsync([id], cancellationToken);
+        var entity = await _context.ShortUrls.FindAsync([id], cancellationToken);
+        return entity?.ToDto();
     }
 
-    public async Task<ShortUrl?> GetByPathAsync(string shortCode, CancellationToken cancellationToken)
+    public async Task<UrlResponseDto?> GetByPathAsync(string shortCode, CancellationToken cancellationToken)
     {
-        return await _context
-            .ShortUrls
+        var entity = await _context.ShortUrls
             .FirstOrDefaultAsync(u => u.ShortCode == shortCode, cancellationToken);
+        return entity?.ToDto();
     }
 
-    public async Task<ShortUrl> AddUrlAsync(string originalUrl, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken)
+    public async Task<UrlResponseDto> AddUrlAsync(string originalUrl, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken)
     {
         // check if exists
         var existing = await _context.ShortUrls
             .FirstOrDefaultAsync(u => u.OriginalURL == originalUrl, cancellationToken);
 
         if (existing != null)
-        {
             throw new InvalidOperationException("This URL already exists.");
-        }
 
         var user = await _userManager.GetUserAsync(userPrincipal);
-        if (user == null)
-        {
-            throw new UnauthorizedAccessException("User is not authenticated.");
-        }
-        
+        if (user == null) throw new UnauthorizedAccessException("User is not authenticated.");
+
         var shortUrl = new ShortUrl
         {
             OriginalURL = originalUrl,
@@ -66,32 +61,24 @@ public class UrlApiService : IUrlApiService
         _context.ShortUrls.Add(shortUrl);
         await _context.SaveChangesAsync(cancellationToken);
 
-        return shortUrl;
+        return shortUrl.ToDto(); 
     }
 
     public async Task<bool> DeleteUrlAsync(int id, ClaimsPrincipal userPrincipal, CancellationToken cancellationToken)
     {
         var url = await _context.ShortUrls.FindAsync([id], cancellationToken);
-        if (url == null)
-            return false;
+        if (url == null) return false;
 
         var user = await _userManager.GetUserAsync(userPrincipal);
-        if (user == null)
-        {
-            throw new UnauthorizedAccessException("User is not authenticated.");
-        }
+        if (user == null) throw new UnauthorizedAccessException("User not found");
         
         var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-        
-        // admin can delete all, users can only delete their own
+
         if (!isAdmin && url.CreatedBy != user.UserName)
-        {
-            throw new UnauthorizedAccessException("You are not allowed to delete this URL.");
-        }
+            throw new UnauthorizedAccessException("Not allowed");
 
         _context.ShortUrls.Remove(url);
         await _context.SaveChangesAsync(cancellationToken);
-        
         return true;
     }
 

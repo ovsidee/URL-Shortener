@@ -41,7 +41,7 @@ public class UrlApiServiceTests
 
         // --assert
         Assert.NotNull(result);
-        Assert.Equal("https://www.test.com", result.OriginalURL);
+        Assert.Equal("https://www.test.com", result.OriginalUrl);
         Assert.Equal("TestUser", result.CreatedBy);
         Assert.Equal(6, result.ShortCode.Length); // Ensure code is 6 chars
         

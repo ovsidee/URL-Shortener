@@ -43,11 +43,12 @@ namespace URLShortener.Controllers
         {
             if (string.IsNullOrEmpty(shortCode)) return RedirectToAction("Index");
 
-            var shortUrl = await _urlService.GetByPathAsync(shortCode, CancellationToken.None);
+            var shortUrl = await _urlService
+                .GetByPathAsync(shortCode, CancellationToken.None);
 
             if (shortUrl == null) return NotFound();
 
-            return Redirect(shortUrl.OriginalURL);
+            return Redirect(shortUrl.OriginalUrl);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

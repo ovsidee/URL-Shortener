@@ -4,8 +4,9 @@ import { Observable } from 'rxjs';
 
 export interface ShortUrl {
   id: number;
-  originalURL: string;
+  originalUrl: string;
   shortCode: string;
+  shortUrl: string;
   createdBy: string;
   createdDate: Date;
 }
