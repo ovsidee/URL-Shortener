@@ -10,7 +10,7 @@ export interface ShortUrl {
   createdDate: Date;
 }
 
-// 1. Define the shape of the User Info
+// user info
 export interface UserInfo {
   isAuthenticated: boolean;
   username: string;
@@ -29,7 +29,6 @@ export class UrlService {
     return this.http.get<ShortUrl[]>(this.apiUrl);
   }
 
-  // 2. Add this method to get current user details
   getUserInfo(): Observable<UserInfo> {
     return this.http.get<UserInfo>(`${this.apiUrl}/me`, {
       withCredentials: true
@@ -46,6 +45,12 @@ export class UrlService {
 
   deleteUrl(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`, {
+      withCredentials: true
+    });
+  }
+
+  getUrlById(id: number): Observable<ShortUrl> {
+    return this.http.get<ShortUrl>(`${this.apiUrl}/${id}`, {
       withCredentials: true
     });
   }

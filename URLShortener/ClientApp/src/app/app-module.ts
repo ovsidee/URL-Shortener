@@ -4,13 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing-module';
-import { AppComponent } from './app'; // Removed .ts
-import { UrlTableComponent } from './components/url-table/url-table'; // Removed .ts (if present)
+import { AppComponent } from './app';
+import { UrlTableComponent } from './components/url-table/url-table';
+import { UrlDetailsComponent } from './components/url-details/url-details';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UrlTableComponent
+    UrlTableComponent,
+    UrlDetailsComponent
   ],
   imports: [
     BrowserModule,

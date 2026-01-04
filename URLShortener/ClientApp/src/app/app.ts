@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  standalone: false, // Ensure this is false too
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: ['./app.css']

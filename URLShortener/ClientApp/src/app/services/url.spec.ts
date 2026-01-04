@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { UrlService } from './url'; // Import the correct class name
+import { UrlService } from './url';
 
 describe('UrlService', () => {
   let service: UrlService;

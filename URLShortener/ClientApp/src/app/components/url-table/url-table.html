@@ -30,9 +30,14 @@
     <tbody>
     <tr *ngFor="let url of urls">
       <td><a [href]="url.originalURL" target="_blank">{{ url.originalURL }}</a></td>
-      <td><strong>{{ url.shortCode }}</strong></td>
+      <td>
+        <a href="http://localhost:5152/{{ url.shortCode }}" target="_blank">
+          <strong>http://localhost:5152/{{ url.shortCode }}</strong>
+        </a>
+      </td>
       <td>{{ url.createdBy }}</td>
       <td>
+        <a [routerLink]="['/url', url.id]" class="btn btn-info btn-sm text-white me-2">Info</a>
         <button *ngIf="canDelete(url)" class="btn btn-danger btn-sm" (click)="deleteUrl(url.id)">Delete</button>
       </td>
     </tr>

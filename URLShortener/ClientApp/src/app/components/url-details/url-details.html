@@ -1,0 +1,44 @@
+<div class="container mt-5">
+  <button class="btn btn-secondary mb-3" (click)="goBack()">← Back to Dashboard</button>
+
+  <div *ngIf="isLoading" class="text-center">
+    <div class="spinner-border text-primary" role="status"></div>
+    <p>Loading details...</p>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="url" class="card shadow-lg">
+    <div class="card-header bg-info text-white">
+      <h3 class="mb-0">URL Details</h3>
+    </div>
+    <div class="card-body">
+      <dl class="row">
+        <dt class="col-sm-3">Original URL:</dt>
+        <dd class="col-sm-9">
+          <a [href]="url.originalURL" target="_blank">{{ url.originalURL }}</a>
+        </dd>
+
+        <dt class="col-sm-3">Short Code:</dt>
+        <dd class="col-sm-9">
+          <strong>{{ url.shortCode }}</strong>
+          <br>
+          <small class="text-muted">
+            Full Link:
+            <a href="http://localhost:5152/{{ url.shortCode }}" target="_blank">
+              http://localhost:5152/{{ url.shortCode }}
+            </a>
+          </small>
+        </dd>
+
+        <dt class="col-sm-3">Created By:</dt>
+        <dd class="col-sm-9">{{ url.createdBy }}</dd>
+
+        <dt class="col-sm-3">Created Date:</dt>
+        <dd class="col-sm-9">{{ url.createdDate | date:'medium' }}</dd>
+      </dl>
+    </div>
+  </div>
+</div>

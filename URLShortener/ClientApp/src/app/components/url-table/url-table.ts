@@ -12,7 +12,7 @@ export class UrlTableComponent implements OnInit {
   newUrl: string = '';
   errorMessage: string = '';
 
-  // 1. Default state: Anonymous
+  // default state for user is "Anonymous"
   currentUser: UserInfo = { isAuthenticated: false, username: '', isAdmin: false };
 
   constructor(private urlService: UrlService, private cdr: ChangeDetectorRef) { }
@@ -22,13 +22,13 @@ export class UrlTableComponent implements OnInit {
   }
 
   loadData() {
-    // 2. Load User Info FIRST, then load the table
+    // load user Info first and then load the table
     this.urlService.getUserInfo().subscribe({
       next: (user) => {
         this.currentUser = user;
-        this.loadUrls(); // Now load the table
+        this.loadUrls(); // load the table
       },
-      error: () => this.loadUrls() // Fallback if auth check fails
+      error: () => this.loadUrls() // if auth check fails
     });
   }
 
@@ -42,11 +42,11 @@ export class UrlTableComponent implements OnInit {
     });
   }
 
-  // 3. Helper function for the HTML to check permissions
+  // helper function for the HTML to check permissions
   canDelete(url: ShortUrl): boolean {
     if (!this.currentUser.isAuthenticated) return false;
-    if (this.currentUser.isAdmin) return true; // Admin deletes everything
-    return url.createdBy === this.currentUser.username; // User deletes own
+    if (this.currentUser.isAdmin) return true; // admin deletes everything
+    return url.createdBy === this.currentUser.username; // user deletes owns
   }
 
   addUrl() {
