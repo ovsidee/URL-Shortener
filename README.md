@@ -19,9 +19,12 @@ Has a secure login system using Identity and a SQLite database.
   * **Admin:**
     * **E-mail: admin@vitalii.com**
     * **Password: Vitalii123!**
+    * **Permissions: Create, View, Delete ALL links, Edit About Page**
+    
   * **Plain User:**
     * **E-mail: user@vitalii.com**
     * **Password: User123!**
+    * **Permissions: Create, View, Delete OWN links only**
 * **Role-Based Access Control:**
   * **Users: Create short links, delete only their own links, view info of their own links.**
   * **Admins: Delete any link, View any link, edit the "About" page content.**
