@@ -16,7 +16,7 @@ public static class DbSeeder
             var roleExist = await roleManager.RoleExistsAsync(roleName);
             if (!roleExist)
             {
-                // create role if does`nt exist
+                // create role if doesn't exist
                 await roleManager.CreateAsync(new IdentityRole(roleName));
             }
         }
